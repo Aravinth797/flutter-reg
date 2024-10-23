@@ -26,17 +26,17 @@ mongoose
     console.log(e);
   });
 
-const options = {
-  key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
-  cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
-  // pfx: fs.readFileSync(path.join(__dirname, 'cert', 'star-cameoindia-24.pfx'))
-};
+// const options = {
+//   key: fs.readFileSync(path.join(__dirname, 'cert', 'key.pem')),
+//   cert: fs.readFileSync(path.join(__dirname, 'cert', 'cert.pem'))
+//   // pfx: fs.readFileSync(path.join(__dirname, 'cert', 'star-cameoindia-24.pfx'))
+// };
 
-https.createServer(options, app).listen(PORT, () => {
-  console.log(`Server running in mode at https://localhost:${PORT}`);
-});
-console.log(`Server is running on port ${PORT}`);
-
-// app.listen(PORT, "0.0.0.0", () => {
-//   console.log(`connected at port ${PORT}`);
+// https.createServer(options, app).listen(PORT, () => {
+//   console.log(`Server running in mode at https://localhost:${PORT}`);
 // });
+// console.log(`Server is running on port ${PORT}`);
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`connected at port ${PORT}`);
+});
