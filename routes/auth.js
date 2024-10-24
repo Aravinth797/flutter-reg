@@ -40,12 +40,19 @@ authRouter.post("/api/signup", async (req, res) => {
 
 authRouter.post("/api/signin", async (req, res) => {
   try {
-    const { email, password } = req.body;
+    // Log the entire request body and headers to see the incoming data
+    console.log("Incoming request body:", req.body);
+    console.log("Request headers:", req.headers);
 
-    console.log("email, password--->", email, password)
+    const { email, password } = req.body;
+    
+    // Log email and password for clarity (make sure not to log passwords in production)
+    console.log("email, password--->", email, password);
 
     const user = await User.findOne({ email });
-    console.log("user,--->", user)
+    
+    // Log if user is found or not
+    console.log("user,--->", user);
 
     if (!user) {
       return res
@@ -54,17 +61,27 @@ authRouter.post("/api/signin", async (req, res) => {
     }
 
     const isMatch = await bcryptjs.compare(password, user.password);
+    
+    // Log password matching result
+    console.log("Password match:", isMatch);
+
     if (!isMatch) {
       return res.status(400).json({ msg: "Incorrect password." });
     }
 
+    // Generate token and log it
     const token = jwt.sign({ id: user._id }, "passwordKey");
-    console.log("token---->", token )
+    console.log("Generated token:", token);
+
+    // Respond with the token and user data
     res.json({ token, ...user._doc });
   } catch (e) {
+    // Log the error details
+    console.error("Error occurred:", e);
     res.status(500).json({ error: e.message });
   }
 });
+
 
 authRouter.post("/tokenIsValid", async (req, res) => {
   try {
